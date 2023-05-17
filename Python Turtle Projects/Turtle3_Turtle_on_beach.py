@@ -6,6 +6,7 @@ speed (50)
 Screen().setup(800, 500)
 Screen().bgcolor("#FFB133")
 
+#draw background
 penup()
 goto(100, 200)
 pendown()
@@ -20,11 +21,13 @@ end_fill()
 
 penup()
 
+#centre turtle
 goto(-200, 0)
 shape("turtle")
 color("green")
 move_distance = 20
 
+#movement functions
 def move_up():
     setheading(90)
     forward(move_distance)
@@ -45,6 +48,7 @@ def move_right():
     forward(move_distance)
     check_goal()
 
+#win condition
 def check_goal():
     if xcor() > 100:
         hideturtle()
@@ -55,11 +59,14 @@ def check_goal():
         onkey(None, "Left")
         onkey(None, "Right")
 
+#controlling the turtle
 onkey(move_up, "Up")
 onkey(move_down, "Down")
 onkey(move_left, "Left")
 onkey(move_right, "Right")
 
+#waiting for input
 listen()
 
+#keeping the window open
 done()
