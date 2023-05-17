@@ -1,4 +1,4 @@
-# PythonTurtle
-This repo contains all my practice projects that use the Python Turtle library.
+# My Python Projects
+This repo contains all my practice projects that I completed over the past few years while learning python.
 
-Python Turtle provides a straightforward and intuitive way to create visually captivating designs, patterns, and games using code.
+As of May 16, 2023, I am moving these projects into public view on GitHub.
