@@ -40,7 +40,7 @@ class Game:
 
     def __init__(self):
         self.attempts = 0
-        objects = self.create_objects
+        objects = self.create_objects()
         self.room = Room(731, objects)
 
     def create_objects(self):
@@ -76,3 +76,61 @@ class Game:
                 "It smells like plastic."
             )
         ]
+    
+    def take_turn(self):
+        prompt = self.get_room_prompt()
+        selection = int(input(prompt))
+
+        if selection >= 1 and selection <= 5:
+            self.select_object(selection - 1)
+            self.take_turn()
+        else:
+            is_code_correct = self.guess_code(selection)
+            if is_code_correct:
+                print("congratulations, you win!")
+            else:
+                if self.attempts == 3:
+                    print("Game Over, you ran out of guesses. Better luck next time.")
+                else:
+                    print(f"Incorrect, you have used {self.attempts}/3 attempts.\n")
+                    self.take_turn()
+
+    def get_room_prompt(self):
+        prompt = "Enter the 3 digit lock code, or choose and item to interact with: \n"
+        index = 1
+        names = self.room.get_game_object_names()
+        for name in names:
+            prompt += f"{index}. {name}\n"
+            index +=1
+        return prompt
+    
+    def select_object(self, index):
+        selected_object = self.room.game_objects[index]
+        prompt = self.get_object_interaction_string(selected_object.name)
+        interaction = input(prompt)
+        clue = self.interact_with_object(selected_object, interaction)
+        print(clue)
+
+    
+    def get_object_interaction_string(self, name):
+        return f"How do you want to interact with the {name}?\n 1. Look\n 2. Touch\n 3.Smell\n"
+    
+    def interact_with_object(self, object, interaction):
+        if interaction == "1":
+            return object.look()
+        elif interaction == "2":
+            return object.touch()
+        elif interaction == "3":
+            return object.sniff()
+        else:
+            return "invalid input"
+        
+    def guess_code(self, code):
+        if self.room.check_code(code):
+            return True
+        else:
+            self.attempts +=1
+            return False
+    
+game = Game()
+game.take_turn()
